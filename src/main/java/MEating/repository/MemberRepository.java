@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,12 +24,12 @@ public class MemberRepository {
         return em.find(Member.class, id);
     }
     /** 회원 전체조회 **/
-    public List<Member> findAAll() {
+    public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
     /** 이름, 생년월일, 전화번호로 회원조회 **/
-    public List<Member> findByInfo(String name, LocalDateTime birth, String phoneNum) {
+    public List<Member> findByInfo(String name, LocalDate birth, String phoneNum) {
         return em.createQuery("select m from Member m where m.name = :name and m.birthday = :birth and m.phoneNumber = :phoneNum", Member.class)
                 .setParameter("name", name)
                 .setParameter("birth", birth)
@@ -36,9 +37,9 @@ public class MemberRepository {
                 .getResultList();
     }
     /** 로그인아이디로 회원조회 **/
-    public Member findByLoginId(String loginId) {
+    public List<Member> findByLoginId(String loginId) {
         return em.createQuery("select m from Member m where m.loginId = :loginId", Member.class)
                 .setParameter("loginId", loginId)
-                .getSingleResult();
+                .getResultList();
     }
 }

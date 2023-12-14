@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     //== 생년월일 ==//
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     //== 전화번호 ==//
     private String phoneNumber;
     //== 회원 유형 ==//
@@ -57,4 +58,18 @@ public class Member extends BaseEntity {
     //== 회원 <--> 채팅 ==//
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<Chatting> chattings = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", loginId='" + loginId + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }
