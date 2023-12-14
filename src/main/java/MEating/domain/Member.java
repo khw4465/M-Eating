@@ -19,7 +19,7 @@ public class Member extends BaseEntity {
     private String loginId;
     //== 비밀번호 ==//
     private String password;
-    //== 회원명 ==//용
+    //== 회원명 ==//
     private String name;
     //== 별명 ==//
     private String nickname;
