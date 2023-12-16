@@ -30,7 +30,7 @@ public class BoardRepository {
                 .getResultList();
     }
 
-    /** 회원으로 게시물 조회 **/
+    /** 회원의 게시물 조회 **/
     public List<Board> findByMember(Member member) {
         return em.createQuery("select b from Board b where b.member = :member", Board.class)
                 .setParameter("member", member)
@@ -39,8 +39,9 @@ public class BoardRepository {
 
     /** 제목으로 게시물 조회 **/
     public List<Board> findByTitle(String title) {
-        return em.createQuery("select b from Board b where b.title like comcat('%' + :title + '%')")
+        return em.createQuery("select b from Board b where b.title like concat('%', :title, '%')", Board.class)
                 .setParameter("title", title)
                 .getResultList();
     }
+
 }
