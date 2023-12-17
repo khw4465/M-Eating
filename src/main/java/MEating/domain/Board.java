@@ -51,4 +51,18 @@ public class Board extends BaseEntity {
     //== 게시물 <--> 채팅방 ==//
     @OneToMany(mappedBy = "board")
     private List<Chatroom> chatrooms = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", type=" + type +
+                ", member=" + member +
+                ", region=" + region +
+                ", food=" + food +
+                '}';
+    }
 }
+
