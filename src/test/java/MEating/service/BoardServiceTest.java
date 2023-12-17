@@ -38,14 +38,11 @@ public class BoardServiceTest {
         food.setName(chicken);
         em.persist(food);
 
-        Region region = new Region();
-        region.setName(RegionName.Seoul);
-        em.persist(region);
+
 
         Board board = new Board();
         board.setMember(member);
         board.setFood(food);
-        board.setRegion(region);
         board.setTitle("치킨 먹을사람 구해요~!");
         board.setContent("내일 저녁 8시에 여의도에서 같이 치킨 뜯으실 분 구합니다!");
         board.setType(BoardType.MakeFriends);

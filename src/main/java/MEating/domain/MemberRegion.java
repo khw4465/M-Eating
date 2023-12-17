@@ -16,7 +16,7 @@ public class MemberRegion extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
 
@@ -26,5 +26,14 @@ public class MemberRegion extends BaseEntity {
         this.region = region;
         member.getMemberRegionList().add(this);
         region.getMemberRegionList().add(this);
+    }
+
+    @Override
+    public String toString() {
+        return "MemberRegion{" +
+                "id=" + id +
+                ", member=" + member +
+                ", region=" + region +
+                '}';
     }
 }

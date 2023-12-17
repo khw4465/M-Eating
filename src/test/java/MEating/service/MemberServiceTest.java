@@ -2,6 +2,8 @@ package MEating.service;
 
 import MEating.domain.Gender;
 import MEating.domain.Member;
+import MEating.domain.MemberRegion;
+import MEating.domain.RegionName;
 import MEating.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.Test;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -30,6 +33,7 @@ public class MemberServiceTest {
     EntityManager em;
 
     @Test
+    @Rollback(false)
     public void 회원가입() throws Exception {
         Member member = new Member();
         member.setLoginId("asdf");
@@ -39,16 +43,36 @@ public class MemberServiceTest {
         member.setGender(Gender.MALE);
         member.setPhoneNumber("01012345678");
 
+        Member member1 = new Member();
+        member1.setLoginId("qwer");
+        member1.setPassword("1111");
+        member1.setName("강호동");
+        member1.setNickname("1박2일짱");
+        member1.setGender(Gender.MALE);
+        member1.setPhoneNumber("01012345678");
+
+        Member.addRegionToMember(member, RegionName.Seoul);
+        Member.addRegionToMember(member, RegionName.GyungGi);
+        List<MemberRegion> memberRegions = Member.addRegionToMember(member, RegionName.Jeju);
+        System.out.println("memberRegions = " + memberRegions);
+
+        Member.addRegionToMember(member1, RegionName.Seoul);
+        Member.addRegionToMember(member1, RegionName.GyungGi);
+        List<MemberRegion> memberRegions1 = Member.addRegionToMember(member1, RegionName.Jeju);
+        System.out.println("memberRegions1 = " + memberRegions1);
+
         String st = "2000-11-11";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birth = LocalDate.parse(st, formatter);
         member.setBirthday(birth);
 
         Long newMember = memberService.join(member);
+        Long newMember1 = memberService.join(member1);
 
         assertEquals(newMember, member.getId());
 
         System.out.println("Member = " + member.toString());
+
 
     }
 
