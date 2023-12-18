@@ -23,7 +23,6 @@ public class MemberService {
         validateDuplicateLoginId(member);
         validateDuplicateMember(member);
         memberRepository.save(member);
-        member.setRegDtm(LocalDateTime.now());
         return member.getId();
     }
 

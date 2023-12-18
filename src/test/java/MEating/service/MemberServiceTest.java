@@ -43,23 +43,9 @@ public class MemberServiceTest {
         member.setGender(Gender.MALE);
         member.setPhoneNumber("01012345678");
 
-        Member member1 = new Member();
-        member1.setLoginId("qwer");
-        member1.setPassword("1111");
-        member1.setName("강호동");
-        member1.setNickname("1박2일짱");
-        member1.setGender(Gender.MALE);
-        member1.setPhoneNumber("01012345678");
-
         Member.addRegionToMember(member, RegionName.Seoul);
-        Member.addRegionToMember(member, RegionName.GyungGi);
         List<MemberRegion> memberRegions = Member.addRegionToMember(member, RegionName.Jeju);
-        System.out.println("memberRegions = " + memberRegions);
-
-        Member.addRegionToMember(member1, RegionName.Seoul);
-        Member.addRegionToMember(member1, RegionName.GyungGi);
-        List<MemberRegion> memberRegions1 = Member.addRegionToMember(member1, RegionName.Jeju);
-        System.out.println("memberRegions1 = " + memberRegions1);
+        System.out.println("memberRegions = " + memberRegions.get(1));
 
         String st = "2000-11-11";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -67,12 +53,10 @@ public class MemberServiceTest {
         member.setBirthday(birth);
 
         Long newMember = memberService.join(member);
-        Long newMember1 = memberService.join(member1);
 
         assertEquals(newMember, member.getId());
 
         System.out.println("Member = " + member.toString());
-
 
     }
 

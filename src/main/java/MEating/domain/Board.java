@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class Board extends BaseEntity {
     private Region region;
 
     //== 게시물 <--> 메뉴 ==//
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
     private Food food;
 
     //== 게시물 <--> 댓글 ==//
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+    @OneToMany(mappedBy = "board")
     private List<Comment> comments = new ArrayList<>();
 
     //== 게시물 <--> 모임 ==//
@@ -51,6 +52,25 @@ public class Board extends BaseEntity {
     //== 게시물 <--> 채팅방 ==//
     @OneToMany(mappedBy = "board")
     private List<Chatroom> chatrooms = new ArrayList<>();
+
+    //== 연관관계 메서드 ==//
+
+    /**
+     * 회원의 정보를 받고 메뉴를 고르면 생성
+     */
+    public static Board createBoard(Member member, FoodType name, int regionListNum) {
+        Board board = new Board();
+        board.setMember(member);
+        Region region = member.getMemberRegionList().get(regionListNum).getRegion();
+        board.setRegion(region);
+        Food food = Food.food(name);
+        board.setFood(food);
+
+        member.getBoards().add(board);
+        food.getBoards().add(board);
+
+        return board;
+    }
 
     @Override
     public String toString() {

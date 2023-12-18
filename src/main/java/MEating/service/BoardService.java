@@ -1,7 +1,6 @@
 package MEating.service;
 
-import MEating.domain.Board;
-import MEating.domain.Member;
+import MEating.domain.*;
 import MEating.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,10 @@ public class BoardService {
         return boardRepository.findOne(boardId);
     }
 
-    /** 게시물 전체 조회 */
-    public List<Board> findAll() {
-        return boardRepository.findAll();
+    /** 게시물 전체(지역,음식) 조회 */
+    public List<Board> findAll(Member member, int regionNum, FoodType food) {
+        Region region = member.getMemberRegionList().get(regionNum).getRegion();
+        return boardRepository.findAll(region, food);
     }
 
     /** 회원의 게시물 조회 */

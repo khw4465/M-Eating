@@ -1,11 +1,11 @@
 package MEating.repository;
 
-import MEating.domain.Board;
-import MEating.domain.Member;
+import MEating.domain.*;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -17,6 +17,7 @@ public class BoardRepository {
     /** 게시물 생성 **/
     public void save(Board board) {
         em.persist(board);
+        board.setRegDtm(LocalDateTime.now());
     }
 
     /** 게시물 단건 조회 **/
@@ -24,22 +25,24 @@ public class BoardRepository {
         return em.find(Board.class, id);
     }
 
-    /** 게시물 전체 조회 **/
-    public List<Board> findAll() {
-        return em.createQuery("select b from Board b", Board.class)
+    /** 게시물 전체(지역,음식) 조회 **/
+    public List<Board> findAll(Region region, FoodType food) {
+        return em.createQuery("select b from Board b where b.region = :region and b.food = :food order by b.regDtm desc", Board.class)
+                .setParameter("region", region.getName())
+                .setParameter("food", food)
                 .getResultList();
     }
 
     /** 회원의 게시물 조회 **/
     public List<Board> findByMember(Member member) {
-        return em.createQuery("select b from Board b where b.member = :member", Board.class)
+        return em.createQuery("select b from Board b where b.member = :member order by b.regDtm", Board.class)
                 .setParameter("member", member)
                 .getResultList();
     }
 
     /** 제목으로 게시물 조회 **/
     public List<Board> findByTitle(String title) {
-        return em.createQuery("select b from Board b where b.title like concat('%', :title, '%')", Board.class)
+        return em.createQuery("select b from Board b where b.title like concat('%', :title, '%') order by b.regDtm", Board.class)
                 .setParameter("title", title)
                 .getResultList();
     }

@@ -18,6 +18,7 @@ public class MemberRepository {
     /** 회원가입 **/
     public void save(Member member) {
         em.persist(member);
+        member.setRegDtm(LocalDateTime.now());
     }
     /** 회원 단건조회 **/
     public Member findOne(Long id) {

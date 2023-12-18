@@ -29,7 +29,9 @@ public class Region extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "region")
     private List<Board> boards = new ArrayList<>();
     
-    private Region(RegionName name) {}
+    private Region(RegionName name) {
+        this.name = name;
+    }
 
     //== 지역별 공유 객체 생성 ==//
     private static final Map<RegionName, Region> regionMap = new EnumMap<>(RegionName.class);
@@ -37,7 +39,6 @@ public class Region extends BaseEntity {
     //== key값으로 들어온 지역명이 존재하지 않으면 객체 추가 ==//
     public static Region region(RegionName name) {
         Region region = regionMap.computeIfAbsent(name, Region::new);
-        region.setName(name); // 지역명
         region.setRegDtm(LocalDateTime.now()); // 등록일시
         return region;
     }
