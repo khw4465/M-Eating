@@ -16,8 +16,8 @@ public class BoardRepository {
 
     /** 게시물 생성 **/
     public void save(Board board) {
-        em.persist(board);
         board.setRegDtm(LocalDateTime.now());
+        em.persist(board);
     }
 
     /** 게시물 단건 조회 **/
