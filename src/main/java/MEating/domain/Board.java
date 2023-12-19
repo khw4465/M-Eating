@@ -42,7 +42,7 @@ public class Board extends BaseEntity {
     private Food food;
 
     //== 게시물 <--> 댓글 ==//
-    @OneToMany(mappedBy = "board")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     //== 게시물 <--> 모임 ==//
@@ -56,7 +56,7 @@ public class Board extends BaseEntity {
     //== 연관관계 메서드 ==//
 
     /**
-     * 회원의 정보를 받고 메뉴를 고르면 생성
+     * 회원, 메뉴, 지역을 파라미터로 받아 게시물 객체 생성
      */
     public static Board createBoard(Member member, FoodType name, int regionListNum) {
         Board board = new Board();
@@ -66,10 +66,43 @@ public class Board extends BaseEntity {
         Food food = Food.food(name);
         board.setFood(food);
 
-        member.getBoards().add(board);
-        food.getBoards().add(board);
-
         return board;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        if (getId() != null ? !getId().equals(board.getId()) : board.getId() != null) return false;
+        if (getTitle() != null ? !getTitle().equals(board.getTitle()) : board.getTitle() != null) return false;
+        if (getContent() != null ? !getContent().equals(board.getContent()) : board.getContent() != null) return false;
+        if (getType() != board.getType()) return false;
+        if (getMember() != null ? !getMember().equals(board.getMember()) : board.getMember() != null) return false;
+        if (getRegion() != null ? !getRegion().equals(board.getRegion()) : board.getRegion() != null) return false;
+        if (getFood() != null ? !getFood().equals(board.getFood()) : board.getFood() != null) return false;
+        if (getComments() != null ? !getComments().equals(board.getComments()) : board.getComments() != null)
+            return false;
+        if (getPromise() != null ? !getPromise().equals(board.getPromise()) : board.getPromise() != null) return false;
+        return getChatrooms() != null ? getChatrooms().equals(board.getChatrooms()) : board.getChatrooms() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);
+        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
+        result = 31 * result + (getMember() != null ? getMember().hashCode() : 0);
+        result = 31 * result + (getRegion() != null ? getRegion().hashCode() : 0);
+        result = 31 * result + (getFood() != null ? getFood().hashCode() : 0);
+        result = 31 * result + (getComments() != null ? getComments().hashCode() : 0);
+        result = 31 * result + (getPromise() != null ? getPromise().hashCode() : 0);
+        result = 31 * result + (getChatrooms() != null ? getChatrooms().hashCode() : 0);
+        return result;
     }
 
     @Override

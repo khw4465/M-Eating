@@ -40,11 +40,11 @@ public class Member extends BaseEntity {
     private List<MemberRegion> memberRegionList = new ArrayList<>();
 
     //== 회원 <--> 게시물 ==//
-    @OneToMany(mappedBy = "member")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
     private List<Board> boards = new ArrayList<>();
 
     //== 회원 <--> 댓글 ==//
-    @OneToMany(mappedBy = "member")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     //== 회원 <--> 모임 ==//
@@ -62,16 +62,16 @@ public class Member extends BaseEntity {
     //== 연관관계 메서드 ==//
 
     /**
-     * 회원과 지역명을 입력하면 회원과 지역에 각각 데이터를 채
+     * 회원과 지역명을 입력하면 회원과 지역에 각각 데이터를 채움
      */
-    public static List<MemberRegion> addRegionToMember(Member member, RegionName regionName) {
+    public List<MemberRegion> addRegionToMember(RegionName regionName) {
         Region region = Region.region(regionName);
 
         MemberRegion memberRegion = new MemberRegion();
-        memberRegion.addMemberRegion(member, region);
+        memberRegion.addMemberRegion(this, region);
         memberRegion.setRegDtm(LocalDateTime.now());
 
-        return member.getMemberRegionList();
+        return getMemberRegionList();
     }
 
     @Override

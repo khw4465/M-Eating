@@ -20,6 +20,14 @@ public class CommentRepository {
         em.persist(comment);
     }
 
+    /** 댓글 삭제 **/
+    public void delete(Comment comment) {
+//        em.createQuery("delete from Comment c where c.id = :id")
+//                .setParameter("id", id)
+//                .executeUpdate();
+        em.remove(comment);
+    }
+
     /** 댓글 단건 조회 **/
     public Comment findOne(Long id){
         return em.find(Comment.class, id);
@@ -39,4 +47,8 @@ public class CommentRepository {
                 .getResultList();
     }
 
+    /** em.clear() **/
+    public void clear() {
+        em.clear();
+    }
 }

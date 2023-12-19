@@ -16,8 +16,12 @@ public class BoardRepository {
 
     /** 게시물 생성 **/
     public void save(Board board) {
-        board.setRegDtm(LocalDateTime.now());
         em.persist(board);
+    }
+
+    /** 게시물 삭제 **/
+    public void delete(Board board) {
+        em.remove(board);
     }
 
     /** 게시물 단건 조회 **/
@@ -47,4 +51,8 @@ public class BoardRepository {
                 .getResultList();
     }
 
+    /** em.clear() **/
+    public void clear() {
+        em.clear();
+    }
 }

@@ -1,5 +1,6 @@
 package MEating.domain;
 
+import MEating.exception.NoBoardException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,4 +25,23 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    //== 연관관계 메서드 ==//
+    /**
+     * 회원과 게시판 정보를 받아서 댓글 객체 생성
+     */
+    public static Comment createComment(Member member, Board board) {
+        Comment comment = new Comment();
+        comment.setMember(member);
+        comment.setBoard(board);
+
+        return comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

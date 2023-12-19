@@ -43,8 +43,8 @@ public class MemberServiceTest {
         member.setGender(Gender.MALE);
         member.setPhoneNumber("01012345678");
 
-        Member.addRegionToMember(member, RegionName.Seoul);
-        List<MemberRegion> memberRegions = Member.addRegionToMember(member, RegionName.Jeju);
+        member.addRegionToMember(RegionName.Seoul);
+        List<MemberRegion> memberRegions = member.addRegionToMember(RegionName.Jeju);
         System.out.println("memberRegions = " + memberRegions.get(1));
 
         String st = "2000-11-11";
