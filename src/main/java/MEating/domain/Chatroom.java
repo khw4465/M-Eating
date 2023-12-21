@@ -29,4 +29,21 @@ public class Chatroom extends BaseEntity {
     //== 채팅방 <--> 채팅 ==//
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chatroom")
     private List<Chatting> chattings = new ArrayList<>();
+
+    public static Chatroom createChatroom(Member member, Board findBoard) {
+        Chatroom chatroom = new Chatroom();
+        List<MemberChatroom> memberList = new ArrayList<>();
+
+        MemberChatroom memberChatroom1 = new MemberChatroom();
+        memberChatroom1.setMember(member);
+        memberList.add(memberChatroom1);
+
+        MemberChatroom memberChatroom2 = new MemberChatroom();
+        memberChatroom2.setMember(findBoard.getMember());
+        memberList.add(memberChatroom2);
+
+        chatroom.setName(findBoard.getMember().getName() + "님과의 채팅");
+
+        return chatroom;
+    }
 }

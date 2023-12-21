@@ -31,8 +31,8 @@ public class BoardRepository {
 
     /** 게시물 전체(지역,음식) 조회 **/
     public List<Board> findAll(Region region, FoodType food) {
-        return em.createQuery("select b from Board b where b.region = :region and b.food = :food order by b.regDtm desc", Board.class)
-                .setParameter("region", region.getName())
+        return em.createQuery("select b from Board b where b.region.name = :regionName and b.food.name = :food order by b.regDtm desc", Board.class)
+                .setParameter("regionName", region.getName())
                 .setParameter("food", food)
                 .getResultList();
     }
