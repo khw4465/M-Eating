@@ -24,8 +24,16 @@ public class MemberChatroom extends BaseEntity {
     public void addMemberChatroom(Member member, Chatroom chatroom) {
         this.member = member;
         this.chatroom = chatroom;
-
         member.getMemberChatroomList().add(this);
         chatroom.getMemberChatroomList().add(this);
+    }
+
+    @Override
+    public String toString() {
+        return "MemberChatroom{" +
+                "id=" + id +
+                ", member=" + member +
+                ", chatroom=" + chatroom +
+                '}';
     }
 }

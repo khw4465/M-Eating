@@ -52,7 +52,7 @@ public class Member extends BaseEntity {
     private List<MemberPromise> memberPromiseList = new ArrayList<>();
 
     //== 회원 <--> 채팅방 ==//
-    @OneToMany(mappedBy = "member")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<MemberChatroom> memberChatroomList = new ArrayList<>();
 
     //== 회원 <--> 채팅 ==//
@@ -72,6 +72,23 @@ public class Member extends BaseEntity {
         memberRegion.setRegDtm(LocalDateTime.now());
 
         return getMemberRegionList();
+    }
+
+    /**
+     * 채팅 쓰기
+     */
+    public Chatting chatting(Chatroom chatroom, String content) {
+        Chatting chatting = new Chatting();
+        chatting.setMember(this);
+        chatting.setChatroom(chatroom);
+        chatting.setContent(content);
+        chatting.setRegDtm(LocalDateTime.now());
+
+        chatroom.getChattings().add(chatting);
+
+        chatting.addChattingToChatroom(this, chatting);
+
+        return chatting;
     }
 
     @Override

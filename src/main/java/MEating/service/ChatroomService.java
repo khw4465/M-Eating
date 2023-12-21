@@ -1,5 +1,6 @@
 package MEating.service;
 
+import MEating.domain.Board;
 import MEating.domain.Chatroom;
 import MEating.domain.Member;
 import MEating.repository.ChatroomRepository;
@@ -18,7 +19,8 @@ public class ChatroomService {
 
     /** 채팅방 생성 */
     @Transactional
-    public Long create(Chatroom chatroom) {
+    public Long create(Member member, Board board) {
+        Chatroom chatroom = Chatroom.createChatroom(member, board);
         chatroomRepository.save(chatroom);
 
         return chatroom.getId();

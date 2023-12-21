@@ -23,5 +23,19 @@ public class Chatting extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     private Member member;
+
+    //== 연관관계 메서드 ==//
+    public void addChattingToChatroom(Member member, Chatting chatting) {
+        this.member = member;
+        member.getChattings().add(chatting);
+    }
+
+    @Override
+    public String toString() {
+        return "Chatting{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
 

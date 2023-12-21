@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Chatroom extends BaseEntity {
     private String name;
 
     //== 채팅방 <--> 회원 ==//
-    @OneToMany(mappedBy = "chatroom")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chatroom")
     private List<MemberChatroom> memberChatroomList = new ArrayList<>();
 
     //== 채팅방 <--> 게시판 ==//
@@ -30,20 +31,30 @@ public class Chatroom extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chatroom")
     private List<Chatting> chattings = new ArrayList<>();
 
+    //== 연관관계 메서드 ==//
     public static Chatroom createChatroom(Member member, Board findBoard) {
         Chatroom chatroom = new Chatroom();
-        List<MemberChatroom> memberList = new ArrayList<>();
+        chatroom.setBoard(findBoard);
+        chatroom.setName(member.getName() + ", " +findBoard.getMember().getName());
+        chatroom.setRegDtm(LocalDateTime.now());
 
         MemberChatroom memberChatroom1 = new MemberChatroom();
-        memberChatroom1.setMember(member);
-        memberList.add(memberChatroom1);
+        memberChatroom1.addMemberChatroom(member, chatroom);
+        memberChatroom1.setRegDtm(LocalDateTime.now());
 
         MemberChatroom memberChatroom2 = new MemberChatroom();
-        memberChatroom2.setMember(findBoard.getMember());
-        memberList.add(memberChatroom2);
+        memberChatroom2.addMemberChatroom(findBoard.getMember(), chatroom);
+        memberChatroom2.setRegDtm(LocalDateTime.now());
 
-        chatroom.setName(findBoard.getMember().getName() + "님과의 채팅");
-
+        findBoard.getChatrooms().add(chatroom);
         return chatroom;
+    }
+
+    @Override
+    public String toString() {
+        return "Chatroom{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
