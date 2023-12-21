@@ -1,0 +1,41 @@
+package MEating.repository;
+
+import MEating.domain.Member;
+import MEating.domain.Promise;
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@RequiredArgsConstructor
+public class PromiseRepository {
+
+    private final EntityManager em;
+
+    /** 모임 생성 */
+    public void save(Promise promise) {
+        em.persist(promise);
+    }
+
+    /** 모임 삭제 */
+    public void delete(Promise promise) {
+        em.remove(promise);
+    }
+
+    /** 모임 단건 조회 */
+    public void findOne(Long id) {
+        em.find(Promise.class, id);
+    }
+
+    /** 모임 전체 조회 */
+    public void findAll() {
+        em.createQuery("select p from Promise p", Promise.class);
+    }
+
+    /** 회원의 모임 조회 */
+    public void findByMember(Member member) {
+        em.createQuery("select mp.promise from MemberPromise mp join fetch mp.promise where mp.member = :member", Promise.class)
+                .setParameter("member", member)
+                .getResultList();
+    }
+}
