@@ -48,7 +48,7 @@ public class Member extends BaseEntity {
     private List<Comment> comments = new ArrayList<>();
 
     //== 회원 <--> 모임 ==//
-    @OneToMany(mappedBy = "member")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<MemberPromise> memberPromiseList = new ArrayList<>();
 
     //== 회원 <--> 채팅방 ==//

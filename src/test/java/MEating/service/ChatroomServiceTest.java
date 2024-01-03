@@ -44,7 +44,7 @@ public class ChatroomServiceTest {
         board.setTitle("햄버거 드실분");
         board.setContent("구합니다");
         Long boardId = boardService.write(member1, board);
-
+ 
         Member member2 = new Member();
         member2.setName("회원2");
         member2.addRegionToMember(RegionName.GyungGi);

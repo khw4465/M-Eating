@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class PromiseRepository {
@@ -23,18 +25,19 @@ public class PromiseRepository {
     }
 
     /** 모임 단건 조회 */
-    public void findOne(Long id) {
-        em.find(Promise.class, id);
+    public Promise findOne(Long id) {
+        return em.find(Promise.class, id);
     }
 
     /** 모임 전체 조회 */
-    public void findAll() {
-        em.createQuery("select p from Promise p", Promise.class);
+    public List<Promise> findAll() {
+        return em.createQuery("select p from Promise p", Promise.class)
+                .getResultList();
     }
 
     /** 회원의 모임 조회 */
-    public void findByMember(Member member) {
-        em.createQuery("select mp.promise from MemberPromise mp join fetch mp.promise where mp.member = :member", Promise.class)
+    public List<Promise> findByMember(Member member) {
+        return em.createQuery("select mp.promise from MemberPromise mp join fetch mp.promise where mp.member = :member", Promise.class)
                 .setParameter("member", member)
                 .getResultList();
     }
