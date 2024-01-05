@@ -18,7 +18,7 @@
 * 개발 언어 : Java17, SpringBoot, JPA, QueryDSL, MySQL, Thymeleaf, HTML/CSS, JavaScript(ES6)
 * 개발 환경 : intelliJ, MySQL Workbench, H2 Database Engine, ERD Cloud, VS Code, GitHub
 
-## 사용 기술
+## 사용 기술 (사용예정 포함)
 * Java (JDK 17)
 * SpringBoot (ver 3.2.0)
 * JPA
