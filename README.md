@@ -15,7 +15,7 @@
 #### 개인 프로젝트
 * 프로젝트 이름 : M-EATING(밋팅)
 * 프로젝트 기간 : 2023.12.14~진행중
-* 개발 언어 : Java17, SpringBoot, JPA, QueryDSL, MySQL, Thymeleaf, HTML/CSS, JavaScript(ES6)
+* 개발 언어 : Java17, SpringBoot, JPA, QueryDSL, H2, MySQL, Thymeleaf, HTML/CSS, JavaScript(ES6)
 * 개발 환경 : intelliJ, MySQL Workbench, H2 Database Engine, ERD Cloud, VS Code, GitHub
 
 ## 사용 기술 (사용예정 포함)
@@ -23,6 +23,7 @@
 * SpringBoot (ver 3.2.0)
 * JPA
 * QueryDSL
+* H2
 * MySQL
 * Thymeleaf
 * HTML/CSS
@@ -30,8 +31,8 @@
 
 ## 개발 환경
 * intelliJ
-* MySQL Workbench
 * H2 Database Engine
+* MySQL Workbench
 * ERD Cloud
 * Visual Studio Code
 * GitHub
